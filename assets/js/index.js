@@ -1,5 +1,7 @@
 var isEditMode = false;
 let currId = "";
+
+
 $("#form").submit(function (e) {
   let values = getInputaValue();
   e.preventDefault();
@@ -81,7 +83,7 @@ function editData({ name, username, mobile, email }) {
 const handleEditData = (id) => {
   toggleSubmitButtonToEdit(true);
   isEditMode = true;
-  MyStorage.map((item) => {
+  MyPersistStorage.Read().map((item) => {
     if (item.id == id) {
       setInputaValue({
         name: item.name,
@@ -96,7 +98,7 @@ const handleEditData = (id) => {
 
 const readDataAndReloadTable = () => {
   clearTable();
-  MyStorage.map((item) => {
+  MyPersistStorage.Read().map((item) => {
     addDataToTable({
       name: item.name,
       email: item.email,
@@ -106,3 +108,4 @@ const readDataAndReloadTable = () => {
     });
   });
 };
+readDataAndReloadTable();

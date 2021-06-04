@@ -1,20 +1,17 @@
 const _AddData = (data) => {
-  MyStorage.push(data);
-  console.log(MyStorage);
-  return;
+  let allData = MyPersistStorage.Read() || [];
+  allData.push(data);
+  MyPersistStorage.Write(allData);
 };
 
 const _DeleteData = (id) => {
-  MyStorage = MyStorage.filter((item) => item.id != id);
-  return;
+  let allData = MyPersistStorage.Read().filter((item) => item.id != id);
+  MyPersistStorage.Write(allData);
 };
 
 const _EditData = (id, UpdateData) => {
-  let oldData = MyStorage.find((item) => item.id == id);
-  MyStorage = MyStorage.filter((item) => item.id != id);
+  let allData = MyPersistStorage.Read().filter((item) => item.id != id);
 
-  oldData = { ...oldData, ...UpdateData };
-  _AddData(oldData);
-
-  return;
+  allData = [...allData, UpdateData];
+  MyPersistStorage.Write(allData);
 };
