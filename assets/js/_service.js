@@ -1,17 +1,90 @@
+var LaatestData = []
+
+const _ReadData = () => {
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      type: "get",
+      url: "http://crud.yuro.ir/storage",
+      headers: {
+        Authorization: "8546486353",
+      },
+      success: function (response) {
+        resolve(response.data);
+        LaatestData = response.data
+      },
+      fail: function (err) {
+        reject(err);
+      },
+    });
+  });
+};
+
 const _AddData = (data) => {
-  let allData = MyPersistStorage.Read() || [];
-  allData.push(data);
-  MyPersistStorage.Write(allData);
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      type: "post",
+      url: "http://crud.yuro.ir/storage",
+      headers: {
+        Authorization: "8546486353",
+      },
+      dataType: "xml/html/script/json", // expected format for response
+      contentType: "application/json",
+      data: JSON.stringify({
+        data: data,
+      }),
+      success: function (response) {
+        resolve(response);
+      },
+      fail: function (err) {
+        reject(err);
+      },
+    });
+  });
 };
 
 const _DeleteData = (id) => {
-  let allData = MyPersistStorage.Read().filter((item) => item.id != id);
-  MyPersistStorage.Write(allData);
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      type: "delete",
+      url: "http://crud.yuro.ir/storage",
+      headers: {
+        Authorization: "8546486353",
+      },
+      dataType: "xml/html/script/json", // expected format for response
+      contentType: "application/json",
+      data: JSON.stringify({
+        id: id,
+      }),
+      success: function (response) {
+        resolve(response);
+      },
+      fail: function (err) {
+        reject(err);
+      },
+    });
+  });
 };
 
 const _EditData = (id, UpdateData) => {
-  let allData = MyPersistStorage.Read().filter((item) => item.id != id);
-
-  allData = [...allData, UpdateData];
-  MyPersistStorage.Write(allData);
+  return new Promise((resolve, reject) => {
+    $.ajax({
+      type: "patch",
+      url: "http://crud.yuro.ir/storage",
+      headers: {
+        Authorization: "8546486353",
+      },
+      dataType: "xml/html/script/json", // expected format for response
+      contentType: "application/json",
+      data: JSON.stringify({
+        id: id,
+        UpdateData: UpdateData,
+      }),
+      success: function (response) {
+        resolve(response);
+      },
+      fail: function (err) {
+        reject(err);
+      },
+    });
+  });
 };
